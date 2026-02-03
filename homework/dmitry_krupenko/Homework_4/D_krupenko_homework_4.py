@@ -4,7 +4,6 @@ my_dict = {
     'dict': {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5},
     'set': {1, 2, 3, 4, 5}
 }
-print(my_dict)
 print(my_dict['tuple'][-1])
 print(my_dict['list'])
 my_dict['list'].append(7)
@@ -21,3 +20,4 @@ my_dict['set'].add(6)
 print(my_dict['set'])
 my_dict['set'].discard(3)
 print(my_dict['set'])
+print(my_dict)
