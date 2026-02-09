@@ -10,3 +10,4 @@ result3 = 'результат работы программы: 9'
 result_index3 = result3.index(": ") + 2
 b = int(result3[result_index3:])
 print(b + 10)
+# Lint упал по ошибке доступа к репо, апдейчу файлик для нового коммита
