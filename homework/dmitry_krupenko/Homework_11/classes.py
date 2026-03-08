@@ -2,14 +2,12 @@ class Book:
     book_material = 'paper'
     text_presence = True
 
-
     def __init__(self, title, author, pages_amount, isbn, reserved):
         self.title = title
         self.author = author
         self.pages_amount = pages_amount
         self.isbn = isbn
         self.reserved = reserved
-
 
     def print_book_info(self):
         if self.reserved:
@@ -27,7 +25,6 @@ class Book:
 
 class Schoolbook(Book):
 
-
     def __init__(
         self,
         title,
@@ -43,7 +40,6 @@ class Schoolbook(Book):
         self.subject = subject
         self.class_number = class_number
         self.task_presence = task_presence
-
 
     def print_book_info(self):
         if self.reserved:
