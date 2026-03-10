@@ -17,7 +17,8 @@ class Flower:
 class Rose(Flower):
     def __init__(self, color, stem_length, price, freshness):
         super().__init__("Rose", color, stem_length, price, freshness, life_time=7)
-        # life_time захардкодил тут, и не выносил как самостоятельную переменную в дочерних классах для более удобного принта
+        # life_time захардкодил тут, и не выносил как самостоятельную переменную в дочерних
+        # классах для более удобного принта
 
 
 class Chamomile(Flower):
