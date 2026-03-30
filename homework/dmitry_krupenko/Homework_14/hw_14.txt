@@ -1,0 +1,64 @@
+-- Создайте студента (student)
+
+INSERT INTO students (name, second_name) VALUES ('Dazdranagon', 'Sovetov')
+
+-- Создайте несколько книг (books) и укажите, что ваш созданный студент взял их
+
+INSERT INTO books (title, taken_by_student_id) VALUES ('Good book', 22599)
+
+INSERT INTO books (title, taken_by_student_id) VALUES ('SQL for AQA', 22599)
+
+INSERT INTO books (title, taken_by_student_id) VALUES ('Any book', 22599)
+
+-- Создайте группу (group) и определите своего студента туда
+
+INSERT INTO `groups` (title, start_date, end_date) VALUES ('D2_group', 'march 2026', 'april 2027')
+
+UPDATE students SET group_id = 22576 WHERE id = 22599
+
+-- Создайте несколько учебных предметов (subjects)
+
+INSERT INTO subjects (title) VALUES ('Subject_1_29_03'), ('Subject_2_29_03'), ('Subject_3_29_03')
+
+-- Создайте по два занятия для каждого предмета (lessons)
+
+INSERT INTO lessons (title, subject_id) VALUES ('lesson1 for 22620', 22620), ('lesson2 for 22620', 22620)
+
+INSERT INTO lessons (title, subject_id) VALUES ('lesson1 for 22619', 22619), ('lesson2 for 22619', 22619)
+
+INSERT INTO lessons (title, subject_id) VALUES ('lesson1 for 22618', 22618), ('lesson2 for 22618', 22618)
+
+-- Поставьте своему студенту оценки (marks) для всех созданных вами занятий
+
+INSERT INTO marks (student_id, lesson_id, value) VALUES (22599, 75746, 10), (22599, 75745, 10)
+
+INSERT INTO marks (student_id, lesson_id, value) VALUES (22599, 75744, 8), (22599, 75743, 8)
+
+INSERT INTO marks (student_id, lesson_id, value) VALUES (22599, 75742, 2), (22599, 75741, 2)
+
+-- Все оценки студента
+
+SELECT value FROM marks WHERE student_id = 22599
+
+-- Все книги, которые находятся у студента
+
+SELECT title FROM books WHERE taken_by_student_id = 22599
+
+-- Для вашего студента выведите всё, что о нем есть в базе: группа, книги,
+оценки с названиями занятий и предметов (всё одним запросом с использованием Join)
+
+SELECT
+s.name,
+s.second_name,
+g.title group_name,
+b.title book,
+l.title lesson,
+sub.title subject,
+m.value mark
+FROM students s
+JOIN `groups` g ON g.id = s.group_id
+JOIN books b ON b.taken_by_student_id = s.id
+JOIN marks m ON m.student_id = s.id
+JOIN lessons l ON l.id = m.lesson_id
+JOIN subjects sub ON sub.id = l.subject_id
+WHERE s.id = 22599
