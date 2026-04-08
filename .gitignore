@@ -5,4 +5,4 @@ venv
 .venv
 __pycache__
 credentials.py
-.env
+homework/dmitry_krupenko/Homework_16/.env
