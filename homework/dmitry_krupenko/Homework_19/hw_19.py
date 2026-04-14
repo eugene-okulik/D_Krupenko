@@ -8,7 +8,7 @@ def print_response(response, label):
     print("Status code:", response.status_code)
     try:
         print("JSON:", response.json())
-    except:
+    except ValueError:
         print("Text:", response.text)
 
 
