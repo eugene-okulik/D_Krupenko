@@ -3,24 +3,24 @@ import pytest
 
 BASE_URL = "http://objapi.course.qa-practice.com/object"
 
+
 @pytest.fixture()
 def creating_and_deleting_fixture():
-    post_req = requests.post(BASE_URL,
-                        json={'data': {'color': 'green', 'size': 'xxl'},'name': 'test_name'})
+    post_req = requests.post(BASE_URL, json={'data': {'color': 'green', 'size': 'xxl'}, 'name': 'test_name'})
     yield post_req
     requests.delete(f"{BASE_URL}/{int(post_req.json()['id'])}")
 
 
 @pytest.fixture(scope="session")
 def test_session_message():
-    print(f"\nStart testing")
+    print("\nStart testing")
     yield
     print("Testing completed")
 
 
 @pytest.fixture()
 def func_message():
-    print(f"\nbefore test")
+    print("\nbefore test")
     yield
     print("after test")
 
@@ -48,8 +48,7 @@ def test_post(func_message, obj):
 @pytest.mark.critical
 def test_put(func_message, creating_and_deleting_fixture):
     obj = requests.put(f"{BASE_URL}/{int(creating_and_deleting_fixture.json()['id'])}",
-                       json={'data': {'color': 'black', 'size': 's', 'additional_field': 'lorem'},
-            'name': 'test_name_2'})
+    json={'data': {'color': 'black', 'size': 's', 'additional_field': 'lorem'}, 'name': 'test_name_2'})
     assert obj.status_code == 200, "статус код не соответсвует ожидаемому"
     assert type(obj.json()["name"]) == str, "невалидный формат данных поля name"
     assert obj.json()["data"] == {'color': 'black', 'size': 's', 'additional_field': 'lorem'}, \
@@ -59,19 +58,18 @@ def test_put(func_message, creating_and_deleting_fixture):
 
 @pytest.mark.medium
 def test_patch(func_message, creating_and_deleting_fixture):
-    obj = requests.patch(f"{BASE_URL}/{int(creating_and_deleting_fixture.json()['id'])}",
-                         json={'name': 'test888'})
+    obj = requests.patch(f"{BASE_URL}/{int(creating_and_deleting_fixture.json()['id'])}", json={'name': 'test888'})
     assert obj.status_code == 200, "статус код не соответсвует ожидаемому"
     assert obj.json()["name"] == "test888", "обновление не применено"
 
 
 def test_delete(func_message):
-    obj = requests.post(BASE_URL,
-                        json={'data': {'color': 'green', 'size': 'xxl'},'name': 'test_name'})
+    obj = requests.post(BASE_URL, json={'data': {'color': 'green', 'size': 'xxl'}, 'name': 'test_name'})
     delete_obj = requests.delete(f"{BASE_URL}/{obj.json()['id']}")
     delete_obj_2 = requests.delete(f"{BASE_URL}/{obj.json()['id']}")
     assert delete_obj.status_code == 200, "статус код не соответсвует ожидаемому"
     assert delete_obj_2.status_code == 404, "статус код не соответсвует ожидаемому"
+
 
 @pytest.mark.skip("skip check")
 def test_skip_test(func_message):
