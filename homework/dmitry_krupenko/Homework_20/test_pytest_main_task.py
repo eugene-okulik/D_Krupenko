@@ -47,8 +47,11 @@ def test_post(func_message, obj):
 
 @pytest.mark.critical
 def test_put(func_message, creating_and_deleting_fixture):
-    obj = requests.put(f"{BASE_URL}/{int(creating_and_deleting_fixture.json()['id'])}",
-    json={'data': {'color': 'black', 'size': 's', 'additional_field': 'lorem'}, 'name': 'test_name_2'})
+    obj = requests.put(
+        f"{BASE_URL}/{int(creating_and_deleting_fixture.json()['id'])}",
+        json={'data': {'color': 'black', 'size': 's', 'additional_field': 'lorem'},
+              'name': 'test_name_2'},
+    )
     assert obj.status_code == 200, "статус код не соответсвует ожидаемому"
     assert type(obj.json()["name"]) == str, "невалидный формат данных поля name"
     assert obj.json()["data"] == {'color': 'black', 'size': 's', 'additional_field': 'lorem'}, \
