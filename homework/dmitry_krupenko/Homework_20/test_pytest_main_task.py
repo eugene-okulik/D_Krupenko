@@ -11,6 +11,12 @@ def creating_and_deleting_fixture():
     requests.delete(f"{BASE_URL}/{int(post_req.json()['id'])}")
 
 
+@pytest.fixture()
+def creating_fixture():
+    post_req = requests.post(BASE_URL, json={'data': {'color': 'green', 'size': 'xxl'}, 'name': 'test_name'})
+    return post_req
+
+
 @pytest.fixture(scope="session")
 def test_session_message():
     print("\nStart testing")
@@ -36,8 +42,6 @@ def test_get_request(func_message, test_session_message, creating_and_deleting_f
 def test_post(func_message, obj):
     new_post = requests.post(BASE_URL,
                              json=obj)
-    print(new_post.json())
-
     assert new_post.status_code == 200, "статус код не соответсвует ожидаемому"
     assert type(new_post.json()["name"]) == str, "невалидный формат данных поля name"
     assert type(new_post.json()["data"]) == dict, "невалидный формат данных поля data"
@@ -66,10 +70,9 @@ def test_patch(func_message, creating_and_deleting_fixture):
     assert obj.json()["name"] == "test888", "обновление не применено"
 
 
-def test_delete(func_message):
-    obj = requests.post(BASE_URL, json={'data': {'color': 'green', 'size': 'xxl'}, 'name': 'test_name'})
-    delete_obj = requests.delete(f"{BASE_URL}/{obj.json()['id']}")
-    delete_obj_2 = requests.delete(f"{BASE_URL}/{obj.json()['id']}")
+def test_delete(func_message, creating_fixture):
+    delete_obj = requests.delete(f"{BASE_URL}/{int(creating_fixture.json()['id'])}")
+    delete_obj_2 = requests.delete(f"{BASE_URL}/{int(creating_fixture.json()['id'])}")
     assert delete_obj.status_code == 200, "статус код не соответсвует ожидаемому"
     assert delete_obj_2.status_code == 404, "статус код не соответсвует ожидаемому"
 
